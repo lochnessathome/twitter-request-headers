@@ -15,14 +15,14 @@ class Header
   end
 
   def value
-    header_string = <<-EOF
-      OAuth #{escape('oauth_consumer_key')}="#{escape(TwitterRequestHeaders.consumer_key)}",
-            #{escape('oauth_nonce')}="#{escape(@nonce)}",
-            #{escape('oauth_signature')}="#{escape(@signature)}",
-            #{escape('oauth_signature_method')}="#{escape(TwitterRequestHeaders.oauth_cipher)}",
-            #{escape('oauth_timestamp')}="#{escape(@epochtime)}",
-            #{escape('oauth_token')}="#{escape(@oauth_token)}",
-            #{escape('oauth_version')}="#{escape(TwitterRequestHeaders.oauth_version)}"
+    <<-EOF
+    OAuth #{escape('oauth_consumer_key')}="#{escape(TwitterRequestHeaders.consumer_key)}",
+          #{escape('oauth_nonce')}="#{escape(@nonce)}",
+          #{escape('oauth_signature')}="#{escape(@signature)}",
+          #{escape('oauth_signature_method')}="#{escape(TwitterRequestHeaders.oauth_cipher)}",
+          #{escape('oauth_timestamp')}="#{escape(@epochtime)}",
+          #{escape('oauth_token')}="#{escape(@oauth_token)}",
+          #{escape('oauth_version')}="#{escape(TwitterRequestHeaders.oauth_version)}"
     EOF
   end
 
