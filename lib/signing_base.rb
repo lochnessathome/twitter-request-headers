@@ -12,7 +12,8 @@ class SigningBase
   def base_string
     request_uri = "#{@twitter_api}#{@request_path}"
     escaped_uri = EscapeUriString.new(request_uri).escape
+    escaped_params = EscapeUriString.new(@signature_params).escape
 
-    "#{@request_verb}&#{escaped_uri}&#{@signature_params}"
+    "#{@request_verb}&#{escaped_uri}&#{escaped_params}"
   end
 end
