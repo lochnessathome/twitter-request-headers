@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "twitter-request-headers"
-  spec.version       = '0.0.9'
+  spec.version       = '0.0.10'
   spec.authors       = ["Dmitrii Komaritckii"]
   spec.email         = ["lochnessathome@gmail.com"]
 
@@ -29,5 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'minitest', '~> 5.8'
 
-  spec.add_dependency 'activesupport', '>= 4.0'
+  spec.add_runtime_dependency 'activesupport', '~> 4.0'
 end
