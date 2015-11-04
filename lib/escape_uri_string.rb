@@ -26,6 +26,12 @@ class EscapeUriString
   private
 
   def validate
+    # true/false can be converted to it's string form clearly
+    if @string.kind_of?(TrueClass) || @string.kind_of?(FalseClass)
+      return true
+    end
+
+    # we shouldn't deal with arrays, hashes and e.g.
     unless @string.kind_of?(String)
       fail ArgumentError, 'Attempt to escape non-string'
     end
@@ -37,7 +43,7 @@ class EscapeUriString
 
   def escape_uri(string)
     begin
-      URI::escape(string, RESERVED_CHARACTERS)
+      URI::escape(string.to_s, RESERVED_CHARACTERS)
     rescue ArgumentError
     rescue
     end

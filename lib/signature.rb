@@ -1,3 +1,8 @@
+=begin
+  Creates signature of request parameters.
+  https://dev.twitter.com/oauth/overview/creating-signatures
+=end
+
 class Signature
   require 'securerandom'
   require 'base64'

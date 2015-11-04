@@ -1,3 +1,8 @@
+=begin
+  Formats HTTP Authorization header.
+  https://dev.twitter.com/oauth/overview/authorizing-requests
+=end
+
 class Header
   require 'twitter_request_headers'
   require 'escape_uri_string'

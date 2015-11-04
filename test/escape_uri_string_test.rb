@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class EscapeUriStringTest < Minitest::Test
-  def test_it_accept_an_argument
+  def test_it_accepts_an_argument
     refute_nil klass.new('hello')
+  end
+
+  def test_it_accepts_boolean_argument
+    refute_nil klass.new(false)
   end
 
   def test_it_fails_with_no_argument
