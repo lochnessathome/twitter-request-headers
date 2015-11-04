@@ -18,6 +18,7 @@ class TwitterRequestHeaders
     # @param oauth_cipher [String, nil] OAuth chipher used by Twitter. See API docs.
     # @param twitter_api [String, nil] Twitter API address. See dashboard.
     # @return [true]
+    #
     def configure(consumer_key, consumer_secret, oauth_version = nil, oauth_cipher = nil, twitter_api = nil)
       @consumer_key = consumer_key
       @consumer_secret = consumer_secret
@@ -30,7 +31,14 @@ class TwitterRequestHeaders
     end
   end
 
-
+  # Creates new session.
+  #
+  # @param oauth_token [String] Twitter OAuth Key
+  # @param oauth_secret [String] Twitter OAuth Secret
+  # @param request_verb [String] HTTP verb: GET, POST, e.g.
+  # @param request_path [String] HTTP request path. Like /users/blah/blah
+  # @param request_params [Hash, nil] HTTP request query. Like {user_id: 111222333}
+  #
   def initialize(oauth_token, oauth_secret, request_verb, request_path, request_params = nil)
     unless @@configured
       fail StandardError, "Call #{self.class}.configure first!"
@@ -47,6 +55,11 @@ class TwitterRequestHeaders
     @epochtime = epochtime
   end
 
+  # HTTP header of format:
+  # {'Authorization' => 'OAuth ...'}
+  #
+  # @return [Hash]
+  #
   def header
     signature = Signature.new(
       @oauth_token,
@@ -69,6 +82,9 @@ class TwitterRequestHeaders
     SecureRandom.hex(16)
   end
 
+  # Current unixtime (seconds)
+  # @return [String] 1446639000
+  #
   def epochtime
     Time.now.to_i.to_s
   end
