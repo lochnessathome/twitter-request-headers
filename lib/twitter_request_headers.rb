@@ -1,5 +1,6 @@
 class TwitterRequestHeaders
-  require 'escape_uri_string'
+  require 'signature'
+  require 'header'
 
   OAUTH_VERSION = '1.0'
   OAUTH_CIPHER = 'HMAC-SHA1'
@@ -9,11 +10,12 @@ class TwitterRequestHeaders
     attr_reader :consumer_key, :consumer_secret, :oauth_version, :oauth_cipher, :twitter_api
 
     def configure(consumer_key, consumer_secret, oauth_version = nil, oauth_cipher = nil, twitter_api = nil)
-      @@consumer_key = consumer_key
-      @@consumer_secret = consumer_secret
-      @@oauth_version = oauth_version || OAUTH_VERSION
-      @@oauth_cipher = oauth_cipher || OAUTH_CIPHER
-      @@twitter_api = twitter_api || TWITTER_API
+      @consumer_key = consumer_key
+      @consumer_secret = consumer_secret
+
+      @oauth_version = oauth_version || OAUTH_VERSION
+      @oauth_cipher = oauth_cipher || OAUTH_CIPHER
+      @twitter_api = twitter_api || TWITTER_API
 
       @@configured = true
     end
@@ -36,6 +38,22 @@ class TwitterRequestHeaders
     @epochtime = epochtime
   end
 
+  def header
+    signature = Signature.new(
+      @oauth_token,
+      @oauth_secret,
+      @request_verb,
+      @request_path,
+      @request_params,
+      @nonce,
+      @epochtime
+    ).digest
+
+    {
+      Header.key => Header.new(@oauth_token, signature, @nonce, @epochtime).value
+    }
+  end
+
   private
 
   def nonce
@@ -44,9 +62,5 @@ class TwitterRequestHeaders
 
   def epochtime
     Time.now.to_i.to_s
-  end
-
-  def escape_uri_string(string)
-    EscapeUriString.new(string).escape
   end
 end

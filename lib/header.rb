@@ -1,14 +1,34 @@
-class AuthorizationHeader
-  def initialize(consumer_key, consumer_secret, oauth_token, oauth_secret)
-    @consumer_key = consumer_key
-    @consumer_secret = consumer_secret
+class Header
+  require 'twitter_request_headers'
+  require 'escape_uri_string'
+
+  def self.key
+    'Authorization'
+  end
+
+  def initialize(oauth_token, signature, nonce, epochtime)
     @oauth_token = oauth_token
-    @oauth_secret = oauth_secret
+    @signature = signature
+
     @nonce = nonce
     @epochtime = epochtime
   end
 
-  def header(signature)
-    
+  def value
+    header_string = <<-EOF
+      OAuth #{escape('oauth_consumer_key')}="#{escape(TwitterRequestHeaders.consumer_key)}",
+            #{escape('oauth_nonce')}="#{escape(@nonce)}",
+            #{escape('oauth_signature')}="#{escape(@signature)}",
+            #{escape('oauth_signature_method')}="#{escape(TwitterRequestHeaders.oauth_cipher)}",
+            #{escape('oauth_timestamp')}="#{escape(@epochtime)}",
+            #{escape('oauth_token')}="#{escape(@oauth_token)}",
+            #{escape('oauth_version')}="#{escape(TwitterRequestHeaders.oauth_version)}"
+    EOF
+  end
+
+  private
+
+  def escape(string)
+    EscapeUriString.new(string).escape
   end
 end
