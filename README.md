@@ -38,10 +38,13 @@ TwitterRequestHeaders.new(
 
 ## Minitest
 
-```sh
-bundle install
-rake test
-```
+Install development dependencies:
+
+    $ bundle install
+
+And run minitest:
+
+    $ rake test
 
 ## License
 
