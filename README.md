@@ -1,8 +1,6 @@
 # TwitterRequestHeaders
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/twitter_request_headers`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem is intended to easily format Twitter API's `Authorization` HTTP header.
 
 ## Installation
 
@@ -22,18 +20,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+TwitterRequestHeaders.configure(
+  'KWZqnnFc8PPMjHOmXUpYNAMlI', # App ID
+  '7HqOlwq7petgYbZwYIznWvaW6gxykFEoiWTliNMCNKosut5VXS' # App Secret
+)
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/lochnessathome/twitter-request-headers. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org/) code of conduct.
-
+TwitterRequestHeaders.new(
+  '150425432-3dAJqsCUXstN1kKgMwpFQGy9JtW6KgBeD30C1b4R', # OAuth Token
+  'YHwc8jkR2pKAISscibQdymNKaXR8dzDsAabQknaJdYs9l', # OAuth Secret
+  'GET',
+  '/users/show.json',
+  {'user_id' => '110425482'}
+).header
+```
 
 ## License
 
