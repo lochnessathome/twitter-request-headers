@@ -9,6 +9,15 @@ class TwitterRequestHeaders
   class << self
     attr_reader :consumer_key, :consumer_secret, :oauth_version, :oauth_cipher, :twitter_api
 
+    # Define Twitter application credentials and options to
+    # be accessible from rest of all library.
+    #
+    # @param consumer_key [String] Application ID/Key
+    # @param consumer_secret [String] Application Secret
+    # @param oauth_version [String, nil] OAuth version used by Twitter. See dashboard.
+    # @param oauth_cipher [String, nil] OAuth chipher used by Twitter. See API docs.
+    # @param twitter_api [String, nil] Twitter API address. See dashboard.
+    # @return [true]
     def configure(consumer_key, consumer_secret, oauth_version = nil, oauth_cipher = nil, twitter_api = nil)
       @consumer_key = consumer_key
       @consumer_secret = consumer_secret
